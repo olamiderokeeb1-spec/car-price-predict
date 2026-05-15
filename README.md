@@ -31,7 +31,7 @@ The following regression models were tested:
 - Linear Regression
 - K-Nearest Neighbors Regressor (KNN)
 - XGBoost Regressor
-- Random Forest Regressor (Best Performing Model)
+- Random Forest Regressor (Best Performing Model)✔
 
 The Random Forest Regressor achieved the best overall performance and was selected for
 
@@ -74,6 +74,37 @@ Collected dataset of used cars in Nigeria.
 ## Installation
 
 ### Clone the repository 
-
+ '''
 git clone (https://github.com/olamiderokeeb1-spec/car-price-predict.git)
+'''
 cd drivevalue-nigeria
+### Move into the project directory
+
+cd your-repository-name
+
+### Install required packages
+
+pip install -r requirements.txt
+
+## Running the App
+
+### Run the Streamlit app locally
+
+streamlit run app.py
+
+#### Then open the generated local URL in your browser.
+
+## Future Improvements
+
+- Improve model accuracy
+- Add image-based car analysis
+- Integrate live car market APIs
+- Add user authentication
+- Deploy with Docker
+- Add advanced visualizations
+
+  ---
+
+  ## Author
+  
+  Developed by Rokeeb Adedapo.
