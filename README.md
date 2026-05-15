@@ -28,10 +28,10 @@ DriveValue Nigeria helps users:
 ## Machine Model Used
 The following regression models were tested:
 
--Linear Regression
--K-Nearest Neighbors Regressor (KNN)
--XGBoost Regressor
--Random Forest Regressor (Best Performing Model)
+- Linear Regression
+- K-Nearest Neighbors Regressor (KNN)
+- XGBoost Regressor
+- Random Forest Regressor (Best Performing Model)
 
 The Random Forest Regressor achieved the best overall performance and was selected for
 
