@@ -35,6 +35,7 @@ The following regression models were tested:
 
 The Random Forest Regressor achieved the best overall performance and was selected for
 
+---
 ## Machine Learning Model
 
 - Algorithm: Random Forest Regressor
