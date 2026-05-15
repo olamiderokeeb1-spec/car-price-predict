@@ -74,9 +74,9 @@ Collected dataset of used cars in Nigeria.
 ## Installation
 
 ### Clone the repository 
- '''
+```
 git clone (https://github.com/olamiderokeeb1-spec/car-price-predict.git)
-'''
+```
 cd drivevalue-nigeria
 ### Move into the project directory
 
