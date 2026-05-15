@@ -79,13 +79,13 @@ git clone (https://github.com/olamiderokeeb1-spec/car-price-predict.git)
 ```
 cd drivevalue-nigeria
 ### Move into the project directory
-
+```
 cd your-repository-name
-
+```
 ### Install required packages
-
+```
 pip install -r requirements.txt
-
+```
 ## Running the App
 
 ### Run the Streamlit app locally
