@@ -4,6 +4,8 @@ import streamlit as st
 import pandas as pd
 import joblib
 
+joblib.dump(rf, 'models/car_price_model.joblib')
+
 # Page setup
 st.set_page_config(page_title="Car Price Predictor", page_icon="🚗")
 
