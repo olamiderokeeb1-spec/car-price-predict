@@ -1,35 +1,116 @@
-# Simple Improved `app.py`
+# app.py
 
 import streamlit as st
 import pandas as pd
 import joblib
 
-# Page setup
-st.set_page_config(page_title="Car Price Predictor", page_icon="🚗")
+# -----------------------------------
+# PAGE CONFIG
+# -----------------------------------
 
-# Load files
+st.set_page_config(
+    page_title="DriveValue Nigeria",
+    page_icon="🚗",
+    layout="centered"
+)
+
+# -----------------------------------
+# LOAD MODEL
+# -----------------------------------
+
 model = joblib.load("car_price_model.joblib")
-scaler = joblib.load("car_price_scaler.joblib")
-columns = joblib.load("car_price_columns.joblib")
 
-# Title
-st.title("🚗 Car Price Prediction App")
-st.write("Predict the estimated price of your car instantly.")
+# -----------------------------------
+# MAKE -> MODEL DATA
+# -----------------------------------
 
-# Inputs
-fuel_type = st.selectbox("⛽ Fuel Type", ["Petrol", "Diesel"])
-gear_type = st.selectbox("⚙️ Gear Type", ["Automatic", "Manual"])
-make = st.text_input("🏢 Car Make")
-model_name = st.text_input("🚘 Car Model")
-year = st.number_input("📅 Year", 1990, 2026)
+car_data = {
+    'Acura': ['ILX', 'MDX', 'RDX', 'RL', 'TL', 'TSX', 'ZDX'],
+    'Audi': ['A4', 'A6', 'A7', 'Q5', 'Q7'],
+    'BMW': ['116i', '130i', '3 Series', '320i', '323i', '325i',
+            '328i', '5 Series', '523i', '525i', '528i',
+            '530i', '535i', '550i', '7 Series', 'X3', 'X5', 'X6'],
+    'Honda': ['Accord', 'Civic', 'CR-V', 'Pilot', 'Odyssey'],
+    'Hyundai': ['Accent', 'Elantra', 'Sonata', 'Tucson'],
+    'Kia': ['Cerato', 'Optima', 'Picanto', 'Rio',
+            'Sorento', 'Sportage'],
+    'Lexus': ['ES', 'GX', 'IS', 'LX', 'RX', 'RX 350'],
+    'Mercedes-Benz': ['C300', 'C350', 'CLA-Class',
+                      'E350', 'GLK-Class', 'GLE-Class',
+                      'S-Class'],
+    'Nissan': ['Altima', 'Maxima', 'Murano',
+               'Pathfinder', 'Rogue', 'Sentra',
+               'X-Trail'],
+    'Toyota': ['4-Runner', 'Avalon', 'Camry',
+               'Corolla', 'Highlander', 'Hilux',
+               'Land Cruiser', 'Land Cruiser Prado',
+               'Matrix', 'Prius', 'RAV4',
+               'Sienna', 'Tacoma', 'Tundra',
+               'Venza', 'Yaris'],
+    'Volkswagen': ['Golf', 'Jetta', 'Passat',
+                   'Polo', 'Touareg']
+}
+
+# -----------------------------------
+# TITLE
+# -----------------------------------
+
+st.title("🚗 DriveValue Nigeria")
+st.write("Get an instant estimate of your car's market value.")
+
+# -----------------------------------
+# USER INPUTS
+# -----------------------------------
+
+make = st.selectbox(
+    "🏢 Car Make",
+    sorted(car_data.keys())
+)
+
+model_name = st.selectbox(
+    "🚘 Car Model",
+    sorted(car_data[make])
+)
+
+fuel_type = st.selectbox(
+    "⛽ Fuel Type",
+    ["Petrol", "Diesel"]
+)
+
+gear_type = st.selectbox(
+    "⚙️ Transmission",
+    ["Automatic", "Manual"]
+)
+
 condition = st.selectbox(
     "📌 Condition",
     ["Nigerian Used", "Foreign Used", "Brand New"]
 )
-mileage = st.number_input("🛣️ Mileage")
-engine_size = st.number_input("🔧 Engine Size")
 
-# Predict button
+year = st.number_input(
+    "📅 Year of Manufacture",
+    min_value=1990,
+    max_value=2026,
+    value=2018
+)
+
+mileage = st.number_input(
+    "🛣 Mileage (km)",
+    min_value=0,
+    value=50000
+)
+
+engine_size = st.number_input(
+    "🔧 Engine Size",
+    min_value=0.8,
+    max_value=8.0,
+    value=2.0
+)
+
+# -----------------------------------
+# PREDICTION
+# -----------------------------------
+
 if st.button("🚀 Predict Price"):
 
     input_data = pd.DataFrame([{
@@ -43,20 +124,17 @@ if st.button("🚀 Predict Price"):
         'Engine Size': engine_size
     }])
 
-    # Convert categorical data
-    input_data = pd.get_dummies(input_data)
+    # Predict directly
+    prediction = model.predict(input_data)
 
-    # Match columns
-    input_data = input_data.reindex(
-        columns=columns,
-        fill_value=0
-    )
-
-    # Scale
-    input_scaled = scaler.transform(input_data)
-
-    # Predict
-    prediction = model.predict(input_scaled)
+    predicted_price = prediction[0]
 
     # Output
+    st.success(
+        f"💰 Estimated Price: ₦{predicted_price:,.0f}"
+    )
+
+    st.info(
+        "⚠️ Prices are estimates and may vary based on market conditions."
+    )
     st.success(f"💰 Estimated Price: ₦{prediction[0]:,.0f}")
